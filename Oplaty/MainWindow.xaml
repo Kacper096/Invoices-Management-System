@@ -45,7 +45,7 @@
                     </Button>
                     <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
                         <Button Content="Moje Dane" FontSize="13" Cursor="Hand" Command="{Binding AccountCommand}"/>
-                        <Button Content="Faktury" FontSize="13" Cursor="Hand" Command="{Binding FeesCommand}"/>
+                        <Button Content="Faktury"FontSize="13" Cursor="Hand" Command="{Binding FeesCommand}"/>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>

@@ -214,5 +214,11 @@
   <ItemGroup>
     <SplashScreen Include="Views\Images\SplashScreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Icons\icons8-show-property-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Icons\icons8-bonds-48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

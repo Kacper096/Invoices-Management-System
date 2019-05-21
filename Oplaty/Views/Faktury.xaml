@@ -14,6 +14,8 @@
         <DataTemplate DataType="{x:Type vm:InvoiceViewModel}">
             <local:InvoiceDetail/>
         </DataTemplate>
+        <Image x:Key="CashImage" Source="/Views/Icons/icons8-bonds-48.png"/>
+        <Image x:Key="DetailsImage" Source="/Views/Icons/icons8-show-property-48.png"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -69,22 +71,23 @@
                 <DataGridTemplateColumn Header="Szczegóły">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button ToolTip="Pokaż szczegóły" Command="{Binding DataContext.DetailsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                <Button ToolTip="Pokaż szczegóły"
+                                    Content="{StaticResource DetailsImage}"
+                                    Command="{Binding DataContext.DetailsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding ID}" >
-                                <materialDesign:PackIcon Kind="CardText"/>
-                            </Button>
+                                </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Zapłać">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Margin="3,3,3,3" Padding="15,3,15,3" Click="Pay_Click"
+                                <Button Margin="3,3,3,3" Padding="15,3,15,3" Click="Pay_Click"
+                                              Content="{StaticResource CashImage}"
                                               Command="{Binding DataContext.PayContent, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                               CommandParameter="{Binding ID}" 
                                               ToolTip="Zapłać" IsEnabled="{Binding CanPay}">
-                                <materialDesign:PackIcon Kind="Cash100"/>
-                            </Button>
+                                </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
