@@ -1,0 +1,124 @@
+﻿<Window x:Class="Oplaty.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Oplaty" 
+        xmlns:view="clr-namespace:Oplaty.Views"
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
+        mc:Ignorable="d"
+        Icon="Ikona.ico"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="500" Width="880" 
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:CategoryViewModel}">
+            <view:TitleView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AccountInfoViewModel}">
+            <view:AboutMe/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <!-- Left Menu-->
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="212">
+                    <!-- It's writes Welcome {Name's client}-->
+                    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Padding="4" Text="{Binding Path=WelcomeAccount}" Margin="10,5,5,10"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" Cursor="Hand"/>
+                    <Button DockPanel.Dock="Bottom" Click="LogOut_Click">
+                        <materialDesign:PackIcon Kind="Logout"/>
+                    </Button>
+                    <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
+                        <Button Content="Moje Dane" FontSize="13" Cursor="Hand" Command="{Binding AccountCommand}"/>
+                        <Button Content="Faktury" FontSize="13" Cursor="Hand" Command="{Binding FeesCommand}"/>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <!-- Main Content With Draggable Panel-->
+            <DockPanel>
+                <!-- Draggable Main Panel with Title-->
+                <materialDesign:ColorZone x:Name="ColorZone" Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" MouseDown="ColorZone_MouseDown" MouseDoubleClick="Maximize_Click">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- Button which shows the menu.-->
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False" x:Name="MenuToggleButton"
+                                      Grid.Column="0" Cursor="Hand"/>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Grid.Column="1" Grid.ColumnSpan="3">
+                            Witaj w Obsłudze Wydatków
+                        </TextBlock>
+                        <!--PopUpBox  Minimalizes, Quits, Lights-->
+                        <Button Grid.Column="4" Click="Maximize_Click" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ArrowExpandAll" x:Name="Maximize"/>
+                        </Button>
+                        <materialDesign:PopupBox Grid.Column="5">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Padding="4,4,4,4" FontSize="12">Light off/on</TextBlock>
+                                        <ToggleButton Margin="4,4,4,4"
+                                             Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                             ToolTip="Turn on/off light."
+                                             IsChecked="False" Click="Light_Click" Cursor="Hand"/>
+                                    </StackPanel>
+                                    <Button Click="Minimalize_Click" Content="Minimalizuj" Cursor="Hand"/>
+                                    <Button Click="Quit_Click" Content="Wyjście" Cursor="Hand"/>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                    </Grid>
+                </materialDesign:ColorZone>
+                <!--<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="4">
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="Imię"/>
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="Nazwisko"/>
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="Nr. PESEL"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2" Grid.RowSpan="4">
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="{Binding Account.Name}" Foreground="#76FF03"/>
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="{Binding Account.LastName}" Foreground="#76FF03"/>
+                        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="{Binding Account.Pesel}" Foreground="#76FF03"/>
+                    </StackPanel>
+                </Grid>-->
+                <!-- Categories, TitleView.xaml -->
+                <ContentPresenter Content="{Binding SelectedViewModel}"/>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </Grid>
+</Window>

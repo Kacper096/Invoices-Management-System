@@ -1,0 +1,1133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OplatyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.KM.FakturaSzczegoly' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="FakturaSzczegoly">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="UslugaID" />
+            <PropertyRef Name="Ilosc" />
+            <PropertyRef Name="CenaJednostkowa" />
+            <PropertyRef Name="WartoscNetto" />
+            <PropertyRef Name="StawkaVAT" />
+            <PropertyRef Name="WartoscVAT" />
+            <PropertyRef Name="WartoscBrutto" />
+          </Key>
+          <Property Name="FakturaID" Type="int" Nullable="false" />
+          <Property Name="UslugaID" Type="int" Nullable="false" />
+          <Property Name="Ilosc" Type="smallint" Nullable="false" />
+          <Property Name="CenaJednostkowa" Type="money" Nullable="false" />
+          <Property Name="WartoscNetto" Type="money" Nullable="false" />
+          <Property Name="StawkaVAT" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="WartoscVAT" Type="money" Nullable="false" />
+          <Property Name="WartoscBrutto" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Faktury">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+          </Key>
+          <Property Name="FakturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientID" Type="int" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+          <Property Name="KategoriaID" Type="int" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
+          <Property Name="RodzajPlatnosci" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DataZaplaty" Type="datetime" />
+          <Property Name="TerminPlatnosci" Type="datetime" Nullable="false" />
+          <Property Name="Waluta" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+          <Property Name="PozostaloDoZaplaty" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Uwagi" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Firmy">
+          <Key>
+            <PropertyRef Name="FirmaID" />
+          </Key>
+          <Property Name="FirmaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NazwaFirmy" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="NIP" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="Regon" Type="nvarchar" MaxLength="20" />
+          <Property Name="Kraj" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Miasto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="KodPocztowy" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="NazwaBanku" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="NumerKontaBank" Type="varchar" MaxLength="26" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorie">
+          <Key>
+            <PropertyRef Name="KategoriaID" />
+          </Key>
+          <Property Name="KategoriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Klienci">
+          <Key>
+            <PropertyRef Name="KlientID" />
+          </Key>
+          <Property Name="KlientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="NazwaFirmy" Type="nvarchar" MaxLength="256" />
+          <Property Name="PESEL" Type="bigint" Nullable="false" />
+          <Property Name="NIP" Type="nvarchar" MaxLength="13" />
+          <Property Name="Haslo" Type="binary" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uslugi">
+          <Key>
+            <PropertyRef Name="UslugaID" />
+          </Key>
+          <Property Name="UslugaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Faktury_z_podziałem_na_Kategorie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Faktury_z_podziałem_na_Kategorie">
+          <Key>
+            <PropertyRef Name="Nazwa" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DoZaplaty" />
+          </Key>
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Firmy_z_iloscia_faktur' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Firmy_z_iloscia_faktur">
+          <Key>
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="NazwaFirmy" />
+          </Key>
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+          <Property Name="NazwaFirmy" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Ilość Faktur" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.IloscUslugFaktur' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IloscUslugFaktur">
+          <Key>
+            <PropertyRef Name="Numer" />
+          </Key>
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Ilość usług" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Klienci_z_fakturami_podział_kateogrii' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Klienci_z_fakturami_podział_kateogrii">
+          <Key>
+            <PropertyRef Name="Imie" />
+            <PropertyRef Name="Nazwisko" />
+            <PropertyRef Name="Nazwa" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DoZaplaty" />
+          </Key>
+          <Property Name="Imie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Nazwa" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+          <Property Name="PozostaloDoZaplaty" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Klienci_Z_Maks_Kwota_DO_Zaplaty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Klienci_Z_Maks_Kwota_DO_Zaplaty">
+          <Key>
+            <PropertyRef Name="Imie" />
+            <PropertyRef Name="Nazwisko" />
+          </Key>
+          <Property Name="Imie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Kwota do zapłaty" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Nie_Oplac_Fak' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Nie_Oplac_Fak">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientID" Type="int" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+          <Property Name="KategoriaID" Type="int" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
+          <Property Name="RodzajPlatnosci" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DataZaplaty" Type="datetime" />
+          <Property Name="TerminPlatnosci" Type="datetime" Nullable="false" />
+          <Property Name="Waluta" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+          <Property Name="PozostaloDoZaplaty" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Uwagi" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Opłacone_Faktury' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Opłacone_Faktury">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientID" Type="int" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+          <Property Name="KategoriaID" Type="int" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
+          <Property Name="RodzajPlatnosci" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DataZaplaty" Type="datetime" />
+          <Property Name="TerminPlatnosci" Type="datetime" Nullable="false" />
+          <Property Name="Waluta" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+          <Property Name="PozostaloDoZaplaty" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Uwagi" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Oplaty.dbo.Ranking_WG_Wartosci_Fak' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Ranking_WG_Wartosci_Fak">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KlientID" Type="int" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+          <Property Name="KategoriaID" Type="int" Nullable="false" />
+          <Property Name="Numer" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DataWystawienia" Type="datetime" Nullable="false" />
+          <Property Name="RodzajPlatnosci" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DataZaplaty" Type="datetime" />
+          <Property Name="TerminPlatnosci" Type="datetime" Nullable="false" />
+          <Property Name="Waluta" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="DoZaplaty" Type="money" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Zaplacono" Type="money" />
+          <Property Name="PozostaloDoZaplaty" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Uwagi" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__FakturaSz__Faktu__4AB81AF0">
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="1" />
+          <End Role="FakturaSzczegoly" Type="Self.FakturaSzczegoly" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faktury">
+              <PropertyRef Name="FakturaID" />
+            </Principal>
+            <Dependent Role="FakturaSzczegoly">
+              <PropertyRef Name="FakturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FakturaSz__Faktu__4BAC3F29">
+          <End Role="Uslugi" Type="Self.Uslugi" Multiplicity="1" />
+          <End Role="FakturaSzczegoly" Type="Self.FakturaSzczegoly" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uslugi">
+              <PropertyRef Name="UslugaID" />
+            </Principal>
+            <Dependent Role="FakturaSzczegoly">
+              <PropertyRef Name="FakturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__FirmaID__44FF419A">
+          <End Role="Firmy" Type="Self.Firmy" Multiplicity="1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firmy">
+              <PropertyRef Name="FirmaID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__Kategor__45F365D3">
+          <End Role="Kategorie" Type="Self.Kategorie" Multiplicity="1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorie">
+              <PropertyRef Name="KategoriaID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="KategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__KlientI__440B1D61">
+          <End Role="Klienci" Type="Self.Klienci" Multiplicity="0..1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klienci">
+              <PropertyRef Name="KlientID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="KlientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Klienci_oplacone_terminowo_faktury" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ROK" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Klienci_z_wykazem_faktur" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ROK" Type="date" Mode="In" />
+        </Function>
+        <Function Name="FakturyWystawione" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM">
+          <Parameter Name="ROK" Type="date" Mode="In" />
+        </Function>
+        <Function Name="KwotaSlownie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM" ReturnType="nvarchar">
+          <Parameter Name="wartosc" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ObliczKwotaVAT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM" ReturnType="money">
+          <Parameter Name="Wartosc" Type="money" Mode="In" />
+          <Parameter Name="StawkaVAT" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ObliczWartoscBrutto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM" ReturnType="money">
+          <Parameter Name="WartoscNetto" Type="money" Mode="In" />
+          <Parameter Name="KwotaVAT" Type="money" Mode="In" />
+        </Function>
+        <Function Name="ObliczWartoscNetto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM" ReturnType="money">
+          <Parameter Name="Ilosc" Type="smallint" Mode="In" />
+          <Parameter Name="CenaNetto" Type="money" Mode="In" />
+        </Function>
+        <Function Name="ZaplacFakture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="KM">
+          <Parameter Name="Kwota" Type="money" Mode="In" />
+          <Parameter Name="NRfaktury" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="OplatyModelStoreContainer">
+          <EntitySet Name="Faktury" EntityType="Self.Faktury" Schema="KM" store:Type="Tables" />
+          <EntitySet Name="Firmy" EntityType="Self.Firmy" Schema="KM" store:Type="Tables" />
+          <EntitySet Name="Kategorie" EntityType="Self.Kategorie" Schema="KM" store:Type="Tables" />
+          <EntitySet Name="Klienci" EntityType="Self.Klienci" Schema="KM" store:Type="Tables" />
+          <EntitySet Name="Uslugi" EntityType="Self.Uslugi" Schema="KM" store:Type="Tables" />
+          <EntitySet Name="FakturaSzczegoly" EntityType="Self.FakturaSzczegoly" store:Type="Tables" store:Schema="KM">
+            <DefiningQuery>SELECT 
+    [FakturaSzczegoly].[FakturaID] AS [FakturaID], 
+    [FakturaSzczegoly].[UslugaID] AS [UslugaID], 
+    [FakturaSzczegoly].[Ilosc] AS [Ilosc], 
+    [FakturaSzczegoly].[CenaJednostkowa] AS [CenaJednostkowa], 
+    [FakturaSzczegoly].[WartoscNetto] AS [WartoscNetto], 
+    [FakturaSzczegoly].[StawkaVAT] AS [StawkaVAT], 
+    [FakturaSzczegoly].[WartoscVAT] AS [WartoscVAT], 
+    [FakturaSzczegoly].[WartoscBrutto] AS [WartoscBrutto]
+    FROM [KM].[FakturaSzczegoly] AS [FakturaSzczegoly]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Faktury_z_podziałem_na_Kategorie" EntityType="Self.Faktury_z_podziałem_na_Kategorie" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Faktury_z_podziałem_na_Kategorie].[Nazwa] AS [Nazwa], 
+    [Faktury_z_podziałem_na_Kategorie].[Numer] AS [Numer], 
+    [Faktury_z_podziałem_na_Kategorie].[DoZaplaty] AS [DoZaplaty], 
+    [Faktury_z_podziałem_na_Kategorie].[Zaplacono] AS [Zaplacono]
+    FROM [dbo].[Faktury_z_podziałem_na_Kategorie] AS [Faktury_z_podziałem_na_Kategorie]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Firmy_z_iloscia_faktur" EntityType="Self.Firmy_z_iloscia_faktur" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Firmy_z_iloscia_faktur].[FirmaID] AS [FirmaID], 
+    [Firmy_z_iloscia_faktur].[NazwaFirmy] AS [NazwaFirmy], 
+    [Firmy_z_iloscia_faktur].[Ilość Faktur] AS [Ilość Faktur]
+    FROM [dbo].[Firmy_z_iloscia_faktur] AS [Firmy_z_iloscia_faktur]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="IloscUslugFaktur" EntityType="Self.IloscUslugFaktur" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IloscUslugFaktur].[Numer] AS [Numer], 
+    [IloscUslugFaktur].[Ilość usług] AS [Ilość usług]
+    FROM [dbo].[IloscUslugFaktur] AS [IloscUslugFaktur]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Klienci_z_fakturami_podział_kateogrii" EntityType="Self.Klienci_z_fakturami_podział_kateogrii" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Klienci_z_fakturami_podział_kateogrii].[Imie] AS [Imie], 
+    [Klienci_z_fakturami_podział_kateogrii].[Nazwisko] AS [Nazwisko], 
+    [Klienci_z_fakturami_podział_kateogrii].[Nazwa] AS [Nazwa], 
+    [Klienci_z_fakturami_podział_kateogrii].[Numer] AS [Numer], 
+    [Klienci_z_fakturami_podział_kateogrii].[DoZaplaty] AS [DoZaplaty], 
+    [Klienci_z_fakturami_podział_kateogrii].[Zaplacono] AS [Zaplacono], 
+    [Klienci_z_fakturami_podział_kateogrii].[PozostaloDoZaplaty] AS [PozostaloDoZaplaty]
+    FROM [dbo].[Klienci_z_fakturami_podział_kateogrii] AS [Klienci_z_fakturami_podział_kateogrii]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Klienci_Z_Maks_Kwota_DO_Zaplaty" EntityType="Self.Klienci_Z_Maks_Kwota_DO_Zaplaty" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Klienci_Z_Maks_Kwota_DO_Zaplaty].[Imie] AS [Imie], 
+    [Klienci_Z_Maks_Kwota_DO_Zaplaty].[Nazwisko] AS [Nazwisko], 
+    [Klienci_Z_Maks_Kwota_DO_Zaplaty].[Kwota do zapłaty] AS [Kwota do zapłaty]
+    FROM [dbo].[Klienci_Z_Maks_Kwota_DO_Zaplaty] AS [Klienci_Z_Maks_Kwota_DO_Zaplaty]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Nie_Oplac_Fak" EntityType="Self.Nie_Oplac_Fak" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Nie_Oplac_Fak].[FakturaID] AS [FakturaID], 
+    [Nie_Oplac_Fak].[KlientID] AS [KlientID], 
+    [Nie_Oplac_Fak].[FirmaID] AS [FirmaID], 
+    [Nie_Oplac_Fak].[KategoriaID] AS [KategoriaID], 
+    [Nie_Oplac_Fak].[Numer] AS [Numer], 
+    [Nie_Oplac_Fak].[DataWystawienia] AS [DataWystawienia], 
+    [Nie_Oplac_Fak].[RodzajPlatnosci] AS [RodzajPlatnosci], 
+    [Nie_Oplac_Fak].[DataZaplaty] AS [DataZaplaty], 
+    [Nie_Oplac_Fak].[TerminPlatnosci] AS [TerminPlatnosci], 
+    [Nie_Oplac_Fak].[Waluta] AS [Waluta], 
+    [Nie_Oplac_Fak].[DoZaplaty] AS [DoZaplaty], 
+    [Nie_Oplac_Fak].[DoZaplatySlownie] AS [DoZaplatySlownie], 
+    [Nie_Oplac_Fak].[Zaplacono] AS [Zaplacono], 
+    [Nie_Oplac_Fak].[PozostaloDoZaplaty] AS [PozostaloDoZaplaty], 
+    [Nie_Oplac_Fak].[Status] AS [Status], 
+    [Nie_Oplac_Fak].[Uwagi] AS [Uwagi]
+    FROM [dbo].[Nie_Oplac_Fak] AS [Nie_Oplac_Fak]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Opłacone_Faktury" EntityType="Self.Opłacone_Faktury" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Opłacone_Faktury].[FakturaID] AS [FakturaID], 
+    [Opłacone_Faktury].[KlientID] AS [KlientID], 
+    [Opłacone_Faktury].[FirmaID] AS [FirmaID], 
+    [Opłacone_Faktury].[KategoriaID] AS [KategoriaID], 
+    [Opłacone_Faktury].[Numer] AS [Numer], 
+    [Opłacone_Faktury].[DataWystawienia] AS [DataWystawienia], 
+    [Opłacone_Faktury].[RodzajPlatnosci] AS [RodzajPlatnosci], 
+    [Opłacone_Faktury].[DataZaplaty] AS [DataZaplaty], 
+    [Opłacone_Faktury].[TerminPlatnosci] AS [TerminPlatnosci], 
+    [Opłacone_Faktury].[Waluta] AS [Waluta], 
+    [Opłacone_Faktury].[DoZaplaty] AS [DoZaplaty], 
+    [Opłacone_Faktury].[DoZaplatySlownie] AS [DoZaplatySlownie], 
+    [Opłacone_Faktury].[Zaplacono] AS [Zaplacono], 
+    [Opłacone_Faktury].[PozostaloDoZaplaty] AS [PozostaloDoZaplaty], 
+    [Opłacone_Faktury].[Status] AS [Status], 
+    [Opłacone_Faktury].[Uwagi] AS [Uwagi]
+    FROM [dbo].[Opłacone_Faktury] AS [Opłacone_Faktury]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Ranking_WG_Wartosci_Fak" EntityType="Self.Ranking_WG_Wartosci_Fak" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Ranking_WG_Wartosci_Fak].[FakturaID] AS [FakturaID], 
+    [Ranking_WG_Wartosci_Fak].[KlientID] AS [KlientID], 
+    [Ranking_WG_Wartosci_Fak].[FirmaID] AS [FirmaID], 
+    [Ranking_WG_Wartosci_Fak].[KategoriaID] AS [KategoriaID], 
+    [Ranking_WG_Wartosci_Fak].[Numer] AS [Numer], 
+    [Ranking_WG_Wartosci_Fak].[DataWystawienia] AS [DataWystawienia], 
+    [Ranking_WG_Wartosci_Fak].[RodzajPlatnosci] AS [RodzajPlatnosci], 
+    [Ranking_WG_Wartosci_Fak].[DataZaplaty] AS [DataZaplaty], 
+    [Ranking_WG_Wartosci_Fak].[TerminPlatnosci] AS [TerminPlatnosci], 
+    [Ranking_WG_Wartosci_Fak].[Waluta] AS [Waluta], 
+    [Ranking_WG_Wartosci_Fak].[DoZaplaty] AS [DoZaplaty], 
+    [Ranking_WG_Wartosci_Fak].[DoZaplatySlownie] AS [DoZaplatySlownie], 
+    [Ranking_WG_Wartosci_Fak].[Zaplacono] AS [Zaplacono], 
+    [Ranking_WG_Wartosci_Fak].[PozostaloDoZaplaty] AS [PozostaloDoZaplaty], 
+    [Ranking_WG_Wartosci_Fak].[Status] AS [Status], 
+    [Ranking_WG_Wartosci_Fak].[Uwagi] AS [Uwagi]
+    FROM [dbo].[Ranking_WG_Wartosci_Fak] AS [Ranking_WG_Wartosci_Fak]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__FakturaSz__Faktu__4AB81AF0" Association="Self.FK__FakturaSz__Faktu__4AB81AF0">
+            <End Role="Faktury" EntitySet="Faktury" />
+            <End Role="FakturaSzczegoly" EntitySet="FakturaSzczegoly" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FakturaSz__Faktu__4BAC3F29" Association="Self.FK__FakturaSz__Faktu__4BAC3F29">
+            <End Role="Uslugi" EntitySet="Uslugi" />
+            <End Role="FakturaSzczegoly" EntitySet="FakturaSzczegoly" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__FirmaID__44FF419A" Association="Self.FK__Faktury__FirmaID__44FF419A">
+            <End Role="Firmy" EntitySet="Firmy" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__Kategor__45F365D3" Association="Self.FK__Faktury__Kategor__45F365D3">
+            <End Role="Kategorie" EntitySet="Kategorie" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__KlientI__440B1D61" Association="Self.FK__Faktury__KlientI__440B1D61">
+            <End Role="Klienci" EntitySet="Klienci" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OplatyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Faktury">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+          </Key>
+          <Property Name="FakturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientID" Type="Int32" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <Property Name="KategoriaID" Type="Int32" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RodzajPlatnosci" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataZaplaty" Type="DateTime" Precision="3" />
+          <Property Name="TerminPlatnosci" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Waluta" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PozostaloDoZaplaty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Uwagi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FakturaSzczegoly" Relationship="Self.FK__FakturaSz__Faktu__4AB81AF0" FromRole="Faktury" ToRole="FakturaSzczegoly" />
+          <NavigationProperty Name="Firmy" Relationship="Self.FK__Faktury__FirmaID__44FF419A" FromRole="Faktury" ToRole="Firmy" />
+          <NavigationProperty Name="Kategorie" Relationship="Self.FK__Faktury__Kategor__45F365D3" FromRole="Faktury" ToRole="Kategorie" />
+          <NavigationProperty Name="Klienci" Relationship="Self.FK__Faktury__KlientI__440B1D61" FromRole="Faktury" ToRole="Klienci" />
+        </EntityType>
+        <EntityType Name="Firmy">
+          <Key>
+            <PropertyRef Name="FirmaID" />
+          </Key>
+          <Property Name="FirmaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NazwaFirmy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Regon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Kraj" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Miasto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adres" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KodPocztowy" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NazwaBanku" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumerKontaBank" Type="String" MaxLength="26" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Faktury" Relationship="Self.FK__Faktury__FirmaID__44FF419A" FromRole="Firmy" ToRole="Faktury" />
+        </EntityType>
+        <EntityType Name="Kategorie">
+          <Key>
+            <PropertyRef Name="KategoriaID" />
+          </Key>
+          <Property Name="KategoriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Faktury" Relationship="Self.FK__Faktury__Kategor__45F365D3" FromRole="Kategorie" ToRole="Faktury" />
+        </EntityType>
+        <EntityType Name="Klienci">
+          <Key>
+            <PropertyRef Name="KlientID" />
+          </Key>
+          <Property Name="KlientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NazwaFirmy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PESEL" Type="Int64" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Haslo" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+          <NavigationProperty Name="Faktury" Relationship="Self.FK__Faktury__KlientI__440B1D61" FromRole="Klienci" ToRole="Faktury" />
+        </EntityType>
+        <EntityType Name="Uslugi">
+          <Key>
+            <PropertyRef Name="UslugaID" />
+          </Key>
+          <Property Name="UslugaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FakturaSzczegoly" Relationship="Self.FK__FakturaSz__Faktu__4BAC3F29" FromRole="Uslugi" ToRole="FakturaSzczegoly" />
+        </EntityType>
+        <EntityType Name="FakturaSzczegoly">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="UslugaID" />
+            <PropertyRef Name="Ilosc" />
+            <PropertyRef Name="CenaJednostkowa" />
+            <PropertyRef Name="WartoscNetto" />
+            <PropertyRef Name="StawkaVAT" />
+            <PropertyRef Name="WartoscVAT" />
+            <PropertyRef Name="WartoscBrutto" />
+          </Key>
+          <Property Name="FakturaID" Type="Int32" Nullable="false" />
+          <Property Name="UslugaID" Type="Int32" Nullable="false" />
+          <Property Name="Ilosc" Type="Int16" Nullable="false" />
+          <Property Name="CenaJednostkowa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="WartoscNetto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="StawkaVAT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WartoscVAT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="WartoscBrutto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Faktury" Relationship="Self.FK__FakturaSz__Faktu__4AB81AF0" FromRole="FakturaSzczegoly" ToRole="Faktury" />
+          <NavigationProperty Name="Uslugi" Relationship="Self.FK__FakturaSz__Faktu__4BAC3F29" FromRole="FakturaSzczegoly" ToRole="Uslugi" />
+        </EntityType>
+        <EntityType Name="Faktury_z_podziałem_na_Kategorie">
+          <Key>
+            <PropertyRef Name="Nazwa" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DoZaplaty" />
+          </Key>
+          <Property Name="Nazwa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Firmy_z_iloscia_faktur">
+          <Key>
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="NazwaFirmy" />
+          </Key>
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <Property Name="NazwaFirmy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ilość_Faktur" Type="Int32" />
+        </EntityType>
+        <EntityType Name="IloscUslugFaktur">
+          <Key>
+            <PropertyRef Name="Numer" />
+          </Key>
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ilość_usług" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Klienci_z_fakturami_podział_kateogrii">
+          <Key>
+            <PropertyRef Name="Imie" />
+            <PropertyRef Name="Nazwisko" />
+            <PropertyRef Name="Nazwa" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DoZaplaty" />
+          </Key>
+          <Property Name="Imie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PozostaloDoZaplaty" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Klienci_Z_Maks_Kwota_DO_Zaplaty">
+          <Key>
+            <PropertyRef Name="Imie" />
+            <PropertyRef Name="Nazwisko" />
+          </Key>
+          <Property Name="Imie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kwota_do_zapłaty" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Nie_Oplac_Fak">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientID" Type="Int32" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <Property Name="KategoriaID" Type="Int32" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RodzajPlatnosci" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataZaplaty" Type="DateTime" Precision="3" />
+          <Property Name="TerminPlatnosci" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Waluta" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PozostaloDoZaplaty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Uwagi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Opłacone_Faktury">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientID" Type="Int32" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <Property Name="KategoriaID" Type="Int32" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RodzajPlatnosci" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataZaplaty" Type="DateTime" Precision="3" />
+          <Property Name="TerminPlatnosci" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Waluta" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PozostaloDoZaplaty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Uwagi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ranking_WG_Wartosci_Fak">
+          <Key>
+            <PropertyRef Name="FakturaID" />
+            <PropertyRef Name="FirmaID" />
+            <PropertyRef Name="KategoriaID" />
+            <PropertyRef Name="Numer" />
+            <PropertyRef Name="DataWystawienia" />
+            <PropertyRef Name="RodzajPlatnosci" />
+            <PropertyRef Name="TerminPlatnosci" />
+            <PropertyRef Name="Waluta" />
+            <PropertyRef Name="DoZaplaty" />
+            <PropertyRef Name="DoZaplatySlownie" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="FakturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KlientID" Type="Int32" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <Property Name="KategoriaID" Type="Int32" Nullable="false" />
+          <Property Name="Numer" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataWystawienia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RodzajPlatnosci" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataZaplaty" Type="DateTime" Precision="3" />
+          <Property Name="TerminPlatnosci" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Waluta" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoZaplaty" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DoZaplatySlownie" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Zaplacono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PozostaloDoZaplaty" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Uwagi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__FakturaSz__Faktu__4AB81AF0">
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="1" />
+          <End Role="FakturaSzczegoly" Type="Self.FakturaSzczegoly" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faktury">
+              <PropertyRef Name="FakturaID" />
+            </Principal>
+            <Dependent Role="FakturaSzczegoly">
+              <PropertyRef Name="FakturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__FirmaID__44FF419A">
+          <End Role="Firmy" Type="Self.Firmy" Multiplicity="1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firmy">
+              <PropertyRef Name="FirmaID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__Kategor__45F365D3">
+          <End Role="Kategorie" Type="Self.Kategorie" Multiplicity="1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorie">
+              <PropertyRef Name="KategoriaID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="KategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Faktury__KlientI__440B1D61">
+          <End Role="Klienci" Type="Self.Klienci" Multiplicity="0..1" />
+          <End Role="Faktury" Type="Self.Faktury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klienci">
+              <PropertyRef Name="KlientID" />
+            </Principal>
+            <Dependent Role="Faktury">
+              <PropertyRef Name="KlientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FakturaSz__Faktu__4BAC3F29">
+          <End Role="Uslugi" Type="Self.Uslugi" Multiplicity="1" />
+          <End Role="FakturaSzczegoly" Type="Self.FakturaSzczegoly" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uslugi">
+              <PropertyRef Name="UslugaID" />
+            </Principal>
+            <Dependent Role="FakturaSzczegoly">
+              <PropertyRef Name="FakturaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OplatyEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Faktury" EntityType="Self.Faktury" />
+          <EntitySet Name="Firmy" EntityType="Self.Firmy" />
+          <EntitySet Name="Kategorie" EntityType="Self.Kategorie" />
+          <EntitySet Name="Klienci" EntityType="Self.Klienci" />
+          <EntitySet Name="Uslugi" EntityType="Self.Uslugi" />
+          <EntitySet Name="FakturaSzczegoly" EntityType="Self.FakturaSzczegoly" />
+          <EntitySet Name="Faktury_z_podziałem_na_Kategorie" EntityType="Self.Faktury_z_podziałem_na_Kategorie" />
+          <EntitySet Name="Firmy_z_iloscia_faktur" EntityType="Self.Firmy_z_iloscia_faktur" />
+          <EntitySet Name="IloscUslugFaktur" EntityType="Self.IloscUslugFaktur" />
+          <EntitySet Name="Klienci_z_fakturami_podział_kateogrii" EntityType="Self.Klienci_z_fakturami_podział_kateogrii" />
+          <EntitySet Name="Klienci_Z_Maks_Kwota_DO_Zaplaty" EntityType="Self.Klienci_Z_Maks_Kwota_DO_Zaplaty" />
+          <EntitySet Name="Nie_Oplac_Fak" EntityType="Self.Nie_Oplac_Fak" />
+          <EntitySet Name="Opłacone_Faktury" EntityType="Self.Opłacone_Faktury" />
+          <EntitySet Name="Ranking_WG_Wartosci_Fak" EntityType="Self.Ranking_WG_Wartosci_Fak" />
+          <AssociationSet Name="FK__FakturaSz__Faktu__4AB81AF0" Association="Self.FK__FakturaSz__Faktu__4AB81AF0">
+            <End Role="Faktury" EntitySet="Faktury" />
+            <End Role="FakturaSzczegoly" EntitySet="FakturaSzczegoly" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__FirmaID__44FF419A" Association="Self.FK__Faktury__FirmaID__44FF419A">
+            <End Role="Firmy" EntitySet="Firmy" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__Kategor__45F365D3" Association="Self.FK__Faktury__Kategor__45F365D3">
+            <End Role="Kategorie" EntitySet="Kategorie" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faktury__KlientI__440B1D61" Association="Self.FK__Faktury__KlientI__440B1D61">
+            <End Role="Klienci" EntitySet="Klienci" />
+            <End Role="Faktury" EntitySet="Faktury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FakturaSz__Faktu__4BAC3F29" Association="Self.FK__FakturaSz__Faktu__4BAC3F29">
+            <End Role="Uslugi" EntitySet="Uslugi" />
+            <End Role="FakturaSzczegoly" EntitySet="FakturaSzczegoly" />
+          </AssociationSet>
+          <FunctionImport Name="Klienci_oplacone_terminowo_faktury" ReturnType="Collection(OplatyModel.Klienci_oplacone_terminowo_faktury_Result)">
+            <Parameter Name="ROK" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Klienci_z_wykazem_faktur" ReturnType="Collection(OplatyModel.Klienci_z_wykazem_faktur_Result)">
+            <Parameter Name="ROK" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="FakturyWystawione" ReturnType="Collection(OplatyModel.FakturyWystawione_Result)">
+            <Parameter Name="ROK" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ZaplacFakture">
+            <Parameter Name="Kwota" Mode="In" Type="Decimal" />
+            <Parameter Name="NRfaktury" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Klienci_oplacone_terminowo_faktury_Result">
+          <Property Type="String" Name="Imie" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Nazwisko" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Numer" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="DataZaplaty" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="Zaplacono" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="Klienci_z_wykazem_faktur_Result">
+          <Property Type="String" Name="Imie" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Numer" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="TerminPlatnosci" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="PozostaloDoZaplaty" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="FakturyWystawione_Result">
+          <Property Type="Int32" Name="FakturaID" Nullable="false" />
+          <Property Type="Int32" Name="KlientID" Nullable="true" />
+          <Property Type="Int32" Name="FirmaID" Nullable="false" />
+          <Property Type="Int32" Name="KategoriaID" Nullable="false" />
+          <Property Type="String" Name="Numer" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="DataWystawienia" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RodzajPlatnosci" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="DataZaplaty" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TerminPlatnosci" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Waluta" Nullable="false" MaxLength="60" />
+          <Property Type="Decimal" Name="DoZaplaty" Nullable="false" Precision="19" />
+          <Property Type="String" Name="DoZaplatySlownie" Nullable="false" MaxLength="256" />
+          <Property Type="Decimal" Name="Zaplacono" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="PozostaloDoZaplaty" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Uwagi" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OplatyModelStoreContainer" CdmEntityContainer="OplatyEntities1">
+          <EntitySetMapping Name="Faktury">
+            <EntityTypeMapping TypeName="OplatyModel.Faktury">
+              <MappingFragment StoreEntitySet="Faktury">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
+                <ScalarProperty Name="RodzajPlatnosci" ColumnName="RodzajPlatnosci" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="Waluta" ColumnName="Waluta" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="DoZaplatySlownie" ColumnName="DoZaplatySlownie" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Firmy">
+            <EntityTypeMapping TypeName="OplatyModel.Firmy">
+              <MappingFragment StoreEntitySet="Firmy">
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="NazwaFirmy" ColumnName="NazwaFirmy" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="Regon" ColumnName="Regon" />
+                <ScalarProperty Name="Kraj" ColumnName="Kraj" />
+                <ScalarProperty Name="Miasto" ColumnName="Miasto" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="KodPocztowy" ColumnName="KodPocztowy" />
+                <ScalarProperty Name="NazwaBanku" ColumnName="NazwaBanku" />
+                <ScalarProperty Name="NumerKontaBank" ColumnName="NumerKontaBank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorie">
+            <EntityTypeMapping TypeName="OplatyModel.Kategorie">
+              <MappingFragment StoreEntitySet="Kategorie">
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klienci">
+            <EntityTypeMapping TypeName="OplatyModel.Klienci">
+              <MappingFragment StoreEntitySet="Klienci">
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="NazwaFirmy" ColumnName="NazwaFirmy" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="Haslo" ColumnName="Haslo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uslugi">
+            <EntityTypeMapping TypeName="OplatyModel.Uslugi">
+              <MappingFragment StoreEntitySet="Uslugi">
+                <ScalarProperty Name="UslugaID" ColumnName="UslugaID" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FakturaSzczegoly">
+            <EntityTypeMapping TypeName="OplatyModel.FakturaSzczegoly">
+              <MappingFragment StoreEntitySet="FakturaSzczegoly">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="UslugaID" ColumnName="UslugaID" />
+                <ScalarProperty Name="Ilosc" ColumnName="Ilosc" />
+                <ScalarProperty Name="CenaJednostkowa" ColumnName="CenaJednostkowa" />
+                <ScalarProperty Name="WartoscNetto" ColumnName="WartoscNetto" />
+                <ScalarProperty Name="StawkaVAT" ColumnName="StawkaVAT" />
+                <ScalarProperty Name="WartoscVAT" ColumnName="WartoscVAT" />
+                <ScalarProperty Name="WartoscBrutto" ColumnName="WartoscBrutto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faktury_z_podziałem_na_Kategorie">
+            <EntityTypeMapping TypeName="OplatyModel.Faktury_z_podziałem_na_Kategorie">
+              <MappingFragment StoreEntitySet="Faktury_z_podziałem_na_Kategorie">
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Firmy_z_iloscia_faktur">
+            <EntityTypeMapping TypeName="OplatyModel.Firmy_z_iloscia_faktur">
+              <MappingFragment StoreEntitySet="Firmy_z_iloscia_faktur">
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="NazwaFirmy" ColumnName="NazwaFirmy" />
+                <ScalarProperty Name="Ilość_Faktur" ColumnName="Ilość Faktur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IloscUslugFaktur">
+            <EntityTypeMapping TypeName="OplatyModel.IloscUslugFaktur">
+              <MappingFragment StoreEntitySet="IloscUslugFaktur">
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="Ilość_usług" ColumnName="Ilość usług" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klienci_z_fakturami_podział_kateogrii">
+            <EntityTypeMapping TypeName="OplatyModel.Klienci_z_fakturami_podział_kateogrii">
+              <MappingFragment StoreEntitySet="Klienci_z_fakturami_podział_kateogrii">
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klienci_Z_Maks_Kwota_DO_Zaplaty">
+            <EntityTypeMapping TypeName="OplatyModel.Klienci_Z_Maks_Kwota_DO_Zaplaty">
+              <MappingFragment StoreEntitySet="Klienci_Z_Maks_Kwota_DO_Zaplaty">
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Kwota_do_zapłaty" ColumnName="Kwota do zapłaty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nie_Oplac_Fak">
+            <EntityTypeMapping TypeName="OplatyModel.Nie_Oplac_Fak">
+              <MappingFragment StoreEntitySet="Nie_Oplac_Fak">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
+                <ScalarProperty Name="RodzajPlatnosci" ColumnName="RodzajPlatnosci" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="Waluta" ColumnName="Waluta" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="DoZaplatySlownie" ColumnName="DoZaplatySlownie" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opłacone_Faktury">
+            <EntityTypeMapping TypeName="OplatyModel.Opłacone_Faktury">
+              <MappingFragment StoreEntitySet="Opłacone_Faktury">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
+                <ScalarProperty Name="RodzajPlatnosci" ColumnName="RodzajPlatnosci" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="Waluta" ColumnName="Waluta" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="DoZaplatySlownie" ColumnName="DoZaplatySlownie" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranking_WG_Wartosci_Fak">
+            <EntityTypeMapping TypeName="OplatyModel.Ranking_WG_Wartosci_Fak">
+              <MappingFragment StoreEntitySet="Ranking_WG_Wartosci_Fak">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
+                <ScalarProperty Name="RodzajPlatnosci" ColumnName="RodzajPlatnosci" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="Waluta" ColumnName="Waluta" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="DoZaplatySlownie" ColumnName="DoZaplatySlownie" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Klienci_oplacone_terminowo_faktury" FunctionName="OplatyModel.Store.Klienci_oplacone_terminowo_faktury">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OplatyModel.Klienci_oplacone_terminowo_faktury_Result">
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Klienci_z_wykazem_faktur" FunctionName="OplatyModel.Store.Klienci_z_wykazem_faktur">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OplatyModel.Klienci_z_wykazem_faktur_Result">
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FakturyWystawione" FunctionName="OplatyModel.Store.FakturyWystawione">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OplatyModel.FakturyWystawione_Result">
+                <ScalarProperty Name="FakturaID" ColumnName="FakturaID" />
+                <ScalarProperty Name="KlientID" ColumnName="KlientID" />
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="KategoriaID" ColumnName="KategoriaID" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="DataWystawienia" ColumnName="DataWystawienia" />
+                <ScalarProperty Name="RodzajPlatnosci" ColumnName="RodzajPlatnosci" />
+                <ScalarProperty Name="DataZaplaty" ColumnName="DataZaplaty" />
+                <ScalarProperty Name="TerminPlatnosci" ColumnName="TerminPlatnosci" />
+                <ScalarProperty Name="Waluta" ColumnName="Waluta" />
+                <ScalarProperty Name="DoZaplaty" ColumnName="DoZaplaty" />
+                <ScalarProperty Name="DoZaplatySlownie" ColumnName="DoZaplatySlownie" />
+                <ScalarProperty Name="Zaplacono" ColumnName="Zaplacono" />
+                <ScalarProperty Name="PozostaloDoZaplaty" ColumnName="PozostaloDoZaplaty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Uwagi" ColumnName="Uwagi" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ZaplacFakture" FunctionName="OplatyModel.Store.ZaplacFakture" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
