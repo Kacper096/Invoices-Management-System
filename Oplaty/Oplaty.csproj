@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ButtImage.xaml.cs">
+      <DependentUpon>ButtImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DatePicker.cs" />
     <Compile Include="Views\AboutMe.xaml.cs">
       <DependentUpon>AboutMe.xaml</DependentUpon>
@@ -100,6 +103,14 @@
     <Compile Include="Views\TitleView.xaml.cs">
       <DependentUpon>TitleView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ButtImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ButtImage_Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
