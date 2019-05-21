@@ -79,5 +79,22 @@ namespace Oplaty.Controls
         {
             RaiseEvent(new RoutedEventArgs(ClickEvent));
         }
+
+        //Command Property
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand),
+                typeof(ButtImage), new UIPropertyMetadata(null));
+
+        public ICommand Command
+        {
+            get
+            {
+                return GetValue(CommandProperty) as ICommand;
+            }
+            set
+            {
+                SetValue(CommandProperty, value);
+            }
+        }
     }
 }
