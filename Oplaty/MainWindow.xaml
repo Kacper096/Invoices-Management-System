@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Oplaty" 
+        xmlns:controls="clr-namespace:Oplaty.Controls"
         xmlns:view="clr-namespace:Oplaty.Views"
         xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
         mc:Ignorable="d"
@@ -44,8 +45,8 @@
                         <materialDesign:PackIcon Kind="Logout"/>
                     </Button>
                     <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
-                        <Button Content="Moje Dane" FontSize="13" Cursor="Hand" Command="{Binding AccountCommand}"/>
-                        <Button Content="Faktury"FontSize="13" Cursor="Hand" Command="{Binding FeesCommand}"/>
+                        <controls:ButtImage Text="Moje Dane" FontSize="13"  ImageSource="/Views/Icons/icons8-bonds-48.png" Command="{Binding AccountCommand}"></controls:ButtImage>
+                        <controls:ButtImage Text="Faktury" FontSize="13" ImageSource="/Views/Icons/icons8-merchant-account-40.png" Command="{Binding FeesCommand}"></controls:ButtImage>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
