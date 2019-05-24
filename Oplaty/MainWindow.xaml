@@ -48,10 +48,10 @@
                         <materialDesign:PackIcon Kind="Logout"/>
                     </Button>
                     <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
-                        <controls:ButtImage Text="Moje Dane" FontSize="13"  ImageSource="/Views/Icons/icons8-bonds-48.png" Command="{Binding AccountCommand}"></controls:ButtImage>
-                        <controls:ButtImage Text="Faktury" FontSize="13" ImageSource="/Views/Icons/icons8-merchant-account-40.png" Command="{Binding FeesCommand}"></controls:ButtImage>
-                        <controls:ButtImage Text="Firmy" FontSize="13" ImageSource="/Views/Icons/icons8-company-50.png" Command="{Binding CompanyCommand}"></controls:ButtImage>
-                        <controls:ButtImage Text="Ranking" FontSize="13" ImageSource="/Views/Icons/icons8-leaderboard-48.png"></controls:ButtImage>
+                        <controls:ButtImage Text="Moje Dane" FontSize="13"  ImageSource="/Views/Icons/icons8-bonds-48.png" Command="{Binding AccountCommand}" ToolTip="Twoje konto"></controls:ButtImage>
+                        <controls:ButtImage Text="Faktury" FontSize="13" ImageSource="/Views/Icons/icons8-merchant-account-40.png" Command="{Binding FeesCommand}" ToolTip="Wyświetl faktury"></controls:ButtImage>
+                        <controls:ButtImage Text="Firmy" FontSize="13" ImageSource="/Views/Icons/icons8-company-50.png" Command="{Binding CompanyCommand}" ToolTip="Wyświetl firmy"></controls:ButtImage>
+                        <controls:ButtImage Text="Ranking" FontSize="13" ImageSource="/Views/Icons/icons8-leaderboard-48.png" ToolTip="Wyświetl ranking"></controls:ButtImage>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
