@@ -173,7 +173,13 @@ namespace ViewModel
         /// </summary>
         private void CreateAccount()
         {
-            SelectedView = new CreateAccViewModel();
+            if (CreateAccViewModel.AmountOfInstances == 0)
+            {
+                var _acc = new CreateAccViewModel();
+                SelectedView = _acc;
+                _acc.CloseControl += () => SelectedView = null;
+
+            }
         }
         #endregion
     }

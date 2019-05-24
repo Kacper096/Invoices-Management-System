@@ -19,6 +19,7 @@ namespace Model
 
         public int AccountID { get => _accountID;  }
 
+
         /// <summary>
         /// Logs to your account.
         /// </summary>
@@ -48,6 +49,41 @@ namespace Model
             catch (Exception e)
             {
                 throw new Exception(e.Message.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Creates new Account
+        /// </summary>
+        /// <param name="pesel">Pesel must have 11 chars.</param>
+        /// <param name="name"></param>
+        /// <param name="lastname"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateAccount(string pesel, string name, string lastname, string password)
+        {
+            bool _result = false;
+
+            try
+            {
+                var _newAcc = new LoginDTO()
+                {
+                    PESEL = Int64.Parse(pesel),
+                    Name = name,
+                    LastName = lastname,
+                    Password = PasswordVerification.CreatePasswordHash(password.Trim())
+                };
+
+                int _callback = await _account.CreateAccount(_newAcc);
+
+                if (_callback == 1)
+                    _result = true;
+
+                return _result;
+            }
+            catch(Exception)
+            {
+                throw;
             }
         }
     }

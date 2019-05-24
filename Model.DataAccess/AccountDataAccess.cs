@@ -73,11 +73,11 @@ namespace Model.DataAccess
 
                     account = query ?? throw new ArgumentNullException("Brak użytkownika");
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     throw new Exception(e.Message);
                 }
@@ -115,7 +115,7 @@ namespace Model.DataAccess
 
                     return query;
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw new ArgumentNullException("Account info is empty.");
                 }
@@ -169,7 +169,7 @@ namespace Model.DataAccess
 
                     return query.ToList();
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw new ArgumentNullException("No invoices.");
                 }
@@ -207,9 +207,9 @@ namespace Model.DataAccess
                         }).AsEnumerable();
 
                         return query.ToList() ?? throw new ArgumentNullException("No companies.");
-                        
+
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         throw;
                     }
@@ -219,7 +219,7 @@ namespace Model.DataAccess
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new Exception("No database connection.");
             }
@@ -232,7 +232,7 @@ namespace Model.DataAccess
         /// <returns></returns>
         public IEnumerable<InvoiceDetailsDTO> GetInvoiceDetails(int invoiceID)
         {
-         
+
             using (var context = new OplatyEntities())
             {
                 try
@@ -265,7 +265,7 @@ namespace Model.DataAccess
                     context.Dispose();
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -283,11 +283,11 @@ namespace Model.DataAccess
 
                     return query ?? throw new ArgumentNullException("We can't find your password.");
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw;
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     throw;
                 }
@@ -316,19 +316,19 @@ namespace Model.DataAccess
                     });
 
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     throw new InvalidOperationException("Your price is wrong.");
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw new ArgumentNullException("Parameter cannot be empty.");
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                     throw new ArgumentException("Wrong Parameters.");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     throw new Exception(e.Message);
                 }
@@ -353,25 +353,58 @@ namespace Model.DataAccess
                 {
                     var account = context.Klienci.SingleOrDefault(x => x.KlientID == accountID);
 
-                    if(account != null)
+                    if (account != null)
                         account.Haslo = pass;
 
-                    int _result =  await context.SaveChangesAsync();
+                    int _result = await context.SaveChangesAsync();
 
                     return _result;
                 }
-                catch(ArgumentNullException)
+                catch (ArgumentNullException)
                 {
                     throw new ArgumentNullException("Your account isn't available.");
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     throw new InvalidOperationException("You can't  do this operation");
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     throw;
                 }
+            }
+        }
+
+        public async Task<int> CreateAccount(LoginDTO accountInfo)
+        {
+            try
+            {
+                using (var context = new OplatyEntities())
+                {
+                    var _client = new Klienci()
+                    {
+                        Imie = accountInfo.Name,
+                        Nazwisko = accountInfo.LastName,
+                        PESEL = accountInfo.PESEL,
+                        Haslo = accountInfo.Password
+                    };
+
+                    try
+                    {
+                        context.Klienci.Add(_client);
+                        int _res = await context.SaveChangesAsync();
+
+                        return _res;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

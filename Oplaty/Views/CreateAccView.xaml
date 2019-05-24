@@ -1,13 +1,17 @@
 ﻿<UserControl x:Class="Oplaty.Views.CreateAccView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helper="clr-namespace:Oplaty.Helpers"
              xmlns:local="clr-namespace:Oplaty.Views"
              mc:Ignorable="d" 
+             Background="#bdbdbd"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -15,5 +19,47 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
+        <!--Exit Button-->
+        <Button Grid.Column="1" Style="{StaticResource MaterialDesignRaisedAccentButton}" Command="{Binding CloseCommand}">
+            <materialDesign:PackIcon Kind="Close"/>
+        </Button>
+        <!--Title-->
+        <materialDesign:ColorZone Grid.Row="1" Grid.ColumnSpan="2" Background="#0064b7">
+            <TextBlock TextAlignment="Center" FontSize="18" FontStyle="Italic">
+                Tworzenie Konta
+            </TextBlock>
+        </materialDesign:ColorZone>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="Imię"  Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                </TextBox>
+                <TextBox Text="{Binding Surrname}" materialDesign:HintAssist.Hint="Nazwisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                </TextBox>
+                <TextBox Text="{Binding PESEL}" materialDesign:HintAssist.Hint="PESEL" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                </TextBox>
+                <PasswordBox materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                         helper:PasswordBoxAssistant.BindPassword="True"
+                         helper:PasswordBoxAssistant.BoundPassword="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
+                </PasswordBox>
+                <PasswordBox materialDesign:HintAssist.Hint="Powtórz hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                         helper:PasswordBoxAssistant.BindPassword="True"
+                         helper:PasswordBoxAssistant.BoundPassword="{Binding RepeatedPassword}">
+                </PasswordBox>
+                <Button Content="Stwórz"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

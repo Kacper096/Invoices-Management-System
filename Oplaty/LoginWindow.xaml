@@ -11,7 +11,7 @@
         Icon="Ikona.ico"
         Title="LoginWindow" Height="450" Width="350" WindowStyle="None" ResizeMode="NoResize" Background="#005b9f">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:CreateAccView}">
+        <DataTemplate DataType="{x:Type vm:CreateAccViewModel}">
             <view:CreateAccView/>
         </DataTemplate>
     </Window.Resources>
@@ -90,6 +90,6 @@
                 <TextBlock Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow"/>
             </Label>
         </Grid>
-        <ContentPresenter Content="{Binding SelectedView}" Grid.RowSpan="2"/>
+        <ContentPresenter Content="{Binding SelectedView, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

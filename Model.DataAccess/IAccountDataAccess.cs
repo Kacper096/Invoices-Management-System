@@ -13,5 +13,6 @@ namespace Model.DataAccess
         IEnumerable<InvoiceBusinessDTO> GetInvoicesInfo(int accountID, int categoryID);
         Task<bool> PayInvoice(int invoiceID, decimal value);
         Task<int> SetsNewPassword(int accountID, byte[] pass);
+        Task<int> CreateAccount(LoginDTO accountInfo);
     }
 }
