@@ -44,7 +44,7 @@
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="16"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" Cursor="Hand"/>
-                    <Button DockPanel.Dock="Bottom" Click="LogOut_Click">
+                    <Button DockPanel.Dock="Bottom" Click="LogOut_Click" ToolTip="Wyloguj">
                         <materialDesign:PackIcon Kind="Logout"/>
                     </Button>
                     <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
