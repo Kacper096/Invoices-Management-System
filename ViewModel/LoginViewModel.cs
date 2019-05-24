@@ -55,7 +55,7 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// Get's the AccountID
+        /// Gets the AccountID
         /// </summary>
         public int AccountID
         {
@@ -63,7 +63,7 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// It's shows error message.
+        /// It shows error message.
         /// </summary>
         public string ErrorMessage
         {
@@ -115,7 +115,7 @@ namespace ViewModel
         }
 
         /// <summary>
-        /// It's authorizes the account.
+        /// It authorizes the account.
         /// </summary>
         private async void Authorization()
         {
@@ -123,7 +123,7 @@ namespace ViewModel
             {
                 IsLoading = true;
 
-                //It's compare password from UI and password from DB
+                //It compares password from UI and password from DB
                  _authorization = await _login.Login(_pesel,_password);
 
                 if (_authorization)
@@ -146,7 +146,7 @@ namespace ViewModel
           }
 
         /// <summary>
-        /// It's resets the Pesel and Password in UI.
+        /// It resets the Pesel and Password in UI.
         /// </summary>
         private void CancelAuthorization()
         {
@@ -154,6 +154,27 @@ namespace ViewModel
             this.Password = string.Empty;
             IsLoading = false;
         }
-        
+
+        #region Create Account
+        public ICommand AccountCommand => new DelegateCommand(CreateAccount);
+
+        private object _selectedView = null;
+        public object SelectedView
+        {
+            get => _selectedView;
+            set
+            {
+                SetProperty(ref _selectedView, value);
+            }
+        }
+
+        /// <summary>
+        /// Creates Account ViewModel and Opens new view.
+        /// </summary>
+        private void CreateAccount()
+        {
+            SelectedView = new CreateAccViewModel();
+        }
+        #endregion
     }
 }
