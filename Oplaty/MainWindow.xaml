@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type vm:AccountInfoViewModel}">
             <view:AboutMe/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CompanyViewModel}">
+            <view:Companies/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
@@ -47,6 +50,8 @@
                     <StackPanel x:Name="DemoItemsListBox" Margin="0,16,0,16">
                         <controls:ButtImage Text="Moje Dane" FontSize="13"  ImageSource="/Views/Icons/icons8-bonds-48.png" Command="{Binding AccountCommand}"></controls:ButtImage>
                         <controls:ButtImage Text="Faktury" FontSize="13" ImageSource="/Views/Icons/icons8-merchant-account-40.png" Command="{Binding FeesCommand}"></controls:ButtImage>
+                        <controls:ButtImage Text="Firmy" FontSize="13" ImageSource="/Views/Icons/icons8-company-50.png" Command="{Binding CompanyCommand}"></controls:ButtImage>
+                        <controls:ButtImage Text="Ranking" FontSize="13" ImageSource="/Views/Icons/icons8-leaderboard-48.png"></controls:ButtImage>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
@@ -117,7 +122,7 @@
                         <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="32" Background="#0077c2" FontSize="25" Content="{Binding Account.Pesel}" Foreground="#76FF03"/>
                     </StackPanel>
                 </Grid>-->
-                <!-- Categories, TitleView.xaml -->
+                <!-- Categories, AccountInfo, Companies -->
                 <ContentPresenter Content="{Binding SelectedViewModel}"/>
             </DockPanel>
         </materialDesign:DrawerHost>
