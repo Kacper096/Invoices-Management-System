@@ -14,6 +14,7 @@ namespace Model
 
         private readonly ICollection<Category> _cats;
         private readonly ICollection<Invoice> _invs;
+        private readonly ICollection<Business> _buss;
 
         public ICollection<Category> Categories => _cats;
 
@@ -28,6 +29,7 @@ namespace Model
             _account = new AccountDataAccess();
             _cats = new List<Category>();
             _invs = new List<Invoice>();
+            _buss = new List<Business>();
             SetCategories();
         }
 
@@ -72,6 +74,34 @@ namespace Model
             }
 
             return _invs;
+        }
+
+        /// <summary>
+        /// Gets all companies information.
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<Business> GetAllCompanies()
+        {
+            try
+            {
+                _buss.Clear();
+
+                IEnumerable<BusinessDTO> _res = _account.GetComapnies();
+
+                foreach(var item in _res)
+                {
+                    Business _bus = new Business(item.BusinessName, item.NIP, item.Regon, item.BuisnessBankName, item.BuisnessBankAccountNumber, item.Country,
+                        item.City, item.Street, item.PostalCode);
+
+                    _buss.Add(_bus);
+                }
+
+                return _buss;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
