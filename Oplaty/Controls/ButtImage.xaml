@@ -8,9 +8,13 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="ownButton">
     <Button Click="Button_Click"  Command="{Binding ElementName=ownButton, Path=Command}">
-        <WrapPanel>
-            <TextBlock Text="{Binding ElementName=ownButton, Path=Text}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <Image Source="{Binding ElementName=ownButton, Path=ImageSource}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        </WrapPanel>
+        <Grid MinWidth="150" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ElementName=ownButton, Path=Text}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <Image Grid.Column="1"  Source="{Binding ElementName=ownButton, Path=ImageSource}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </Grid>
     </Button>
 </UserControl>
