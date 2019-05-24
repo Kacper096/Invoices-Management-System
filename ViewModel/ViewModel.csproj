@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AccountInfoViewModel.cs" />
     <Compile Include="CategoryViewModel.cs" />
+    <Compile Include="CompanyViewModel.cs" />
     <Compile Include="InvoicesViewModel.cs" />
     <Compile Include="InvoiceViewModel.cs" />
     <Compile Include="LoginViewModel.cs" />

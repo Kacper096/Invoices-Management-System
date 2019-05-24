@@ -38,6 +38,7 @@ namespace ViewModel
 
         private object _CategoryVM;
         private object _AccountVM;
+        private object _CompaniesVM;
 
         private object _selectedvm;
 
@@ -54,8 +55,9 @@ namespace ViewModel
         }
 
         #region Command ViewModels
-        public ICommand AccountCommand { get; }
-        public ICommand FeesCommand { get; }
+        public ICommand AccountCommand => new DelegateCommand(AccountVM);
+        public ICommand FeesCommand => new DelegateCommand(FeesVM);
+        public ICommand CompanyCommand => new DelegateCommand(CompanyVM);
         #endregion
 
         /// <summary>
@@ -63,14 +65,14 @@ namespace ViewModel
         /// </summary>
         private void AccountVM() => SelectedViewModel = _AccountVM;
         private void FeesVM() => SelectedViewModel = _CategoryVM;
+        private void CompanyVM() => SelectedViewModel = _CompaniesVM;
 
         public MainViewModel(int accountID)
         {
             _account = new Account(accountID);
-            AccountCommand = new DelegateCommand(AccountVM);
-            FeesCommand = new DelegateCommand(FeesVM);
             _CategoryVM = new CategoryViewModel();
             _AccountVM = new AccountInfoViewModel(_account);
+            _CompaniesVM = new CompanyViewModel();
             //It's default Main Page. 
             SelectedViewModel = _CategoryVM; 
         }
