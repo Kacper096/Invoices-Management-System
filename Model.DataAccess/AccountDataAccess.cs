@@ -181,6 +181,51 @@ namespace Model.DataAccess
         }
 
         /// <summary>
+        /// Get all Companies.
+        /// </summary>
+        /// <returns>Array of companies.</returns>
+        public IEnumerable<BusinessDTO> GetComapnies()
+        {
+            try
+            {
+                using (var context = new OplatyEntities())
+                {
+                    try
+                    {
+
+                        var query = context.Firmy.Select(x => new BusinessDTO
+                        {
+                            BuisnessBankAccountNumber = x.NumerKontaBank,
+                            BuisnessBankName = x.NazwaBanku,
+                            BusinessName = x.NazwaFirmy,
+                            Country = x.Kraj,
+                            City = x.Miasto,
+                            Street = x.Adres,
+                            PostalCode = x.KodPocztowy,
+                            NIP = x.NIP,
+                            Regon = x.Regon
+                        }).AsEnumerable();
+
+                        return query.ToList() ?? throw new ArgumentNullException("No companies.");
+                        
+                    }
+                    catch(Exception)
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        context.Dispose();
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                throw new Exception("No database connection.");
+            }
+        }
+
+        /// <summary>
         /// It gets the information about invoice. It contains amount, netto value, Vat value etc.
         /// </summary>
         /// <param name="invoiceID"></param>
