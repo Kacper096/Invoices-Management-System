@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Name="ownButton">
-    <Button Click="Button_Click"  Command="{Binding ElementName=ownButton, Path=Command}">
+    <Button Click="Button_Click"  Command="{Binding ElementName=ownButton, Path=Command}" Height="45">
         <Grid MinWidth="150" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
