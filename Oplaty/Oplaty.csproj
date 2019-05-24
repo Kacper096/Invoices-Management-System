@@ -94,6 +94,9 @@
     <Compile Include="Views\AboutMe.xaml.cs">
       <DependentUpon>AboutMe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Companies.xaml.cs">
+      <DependentUpon>Companies.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Faktury.xaml.cs">
       <DependentUpon>Faktury.xaml</DependentUpon>
     </Compile>
@@ -104,10 +107,6 @@
       <DependentUpon>TitleView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\ButtImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ButtImage_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AboutMe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Companies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,6 +233,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Views\Icons\icons8-bonds-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Icons\icons8-company-50.png" />
+    <Resource Include="Views\Icons\icons8-leaderboard-48.png" />
+    <Resource Include="Views\Icons\icons8-merchant-account-40.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
