@@ -66,18 +66,22 @@ namespace Model
 
             try
             {
-                var _newAcc = new LoginDTO()
+                if (PESEL.Check(pesel) && PasswordVerification.CanBeAPassword(password))
                 {
-                    PESEL = Int64.Parse(pesel),
-                    Name = name,
-                    LastName = lastname,
-                    Password = PasswordVerification.CreatePasswordHash(password.Trim())
-                };
+                    var _newAcc = new LoginDTO()
+                    {
+                        PESEL = Int64.Parse(pesel),
+                        Name = name,
+                        LastName = lastname,
+                        Password = PasswordVerification.CreatePasswordHash(password.Trim())
+                    };
 
-                int _callback = await _account.CreateAccount(_newAcc);
+                    int _callback = await _account.CreateAccount(_newAcc);
 
-                if (_callback == 1)
-                    _result = true;
+                    if (_callback == 1)
+                        _result = true;
+
+                }
 
                 return _result;
             }
