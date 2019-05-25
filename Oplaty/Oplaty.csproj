@@ -100,8 +100,8 @@
     <Compile Include="Views\CreateAccView.xaml.cs">
       <DependentUpon>CreateAccView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Faktury.xaml.cs">
-      <DependentUpon>Faktury.xaml</DependentUpon>
+    <Compile Include="Views\Invoice.xaml.cs">
+      <DependentUpon>Invoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InvoiceDetail.xaml.cs">
       <DependentUpon>InvoiceDetail.xaml</DependentUpon>
@@ -145,7 +145,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Faktury.xaml">
+    <Page Include="Views\Invoice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
