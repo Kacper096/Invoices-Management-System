@@ -19,7 +19,7 @@ namespace OplatyTests
         [DataRow(" 2NoHA#asdas ", false)]
         [DataRow("@$asdkSdaa", false)]
         [DataRow("@$as54Sdaa", true)]
-        [DataRow("@$as5_Sdaa", false)]
+        [DataRow("@$as5_Sdaa", true)]
         public void CanBeAPassword_ComparesPassAndPattern(string password, bool expected)
         {
             Assert.AreEqual(expected, PasswordVerification.CanBeAPassword(password));
