@@ -7,7 +7,7 @@
              xmlns:helper="clr-namespace:Oplaty.Helpers"
              xmlns:local="clr-namespace:Oplaty.Views"
              mc:Ignorable="d" 
-             Background="#bdbdbd"
+             Background="#1565c0"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
             <materialDesign:PackIcon Kind="Close"/>
         </Button>
         <!--Title-->
-        <materialDesign:ColorZone Grid.Row="1" Grid.ColumnSpan="2" Background="#0064b7">
+        <materialDesign:ColorZone Grid.Row="1" Grid.ColumnSpan="2" Background="#002f6c">
             <TextBlock TextAlignment="Center" FontSize="18" FontStyle="Italic">
                 Tworzenie Konta
             </TextBlock>
@@ -47,24 +47,29 @@
             </Grid.RowDefinitions>
             <!--Inputs-->
             <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="4" >
-                <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="Imię"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3">
+                <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="Imię"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3" 
+                         Foreground="#FFFFFF">
                 </TextBox>
-                <TextBox Text="{Binding Lastname}" materialDesign:HintAssist.Hint="Nazwisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3">
+                <TextBox Text="{Binding Lastname}" materialDesign:HintAssist.Hint="Nazwisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3" 
+                         Foreground="#FFFFFF">
                 </TextBox>
-                <TextBox Text="{Binding PESEL}" materialDesign:HintAssist.Hint="PESEL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3" MaxLength="11">
+                <TextBox Text="{Binding PESEL}" materialDesign:HintAssist.Hint="PESEL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3" MaxLength="11" 
+                         Foreground="#FFFFFF">
                 </TextBox>
                 <PasswordBox materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="10,3"
                              helper:PasswordBoxAssistant.BindPassword="True"
                              helper:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             ToolTip="Musi zawierać od 8 do 22 znaków. Posiadać małą, dużą literę, cyfrę oraz znak specjalny(@$!%*?&amp;_-)">
+                             ToolTip="Musi zawierać od 8 do 22 znaków. Posiadać małą, dużą literę, cyfrę oraz znak specjalny(@$!%*?&amp;_-)"
+                             Foreground="#FFFFFF">
                 </PasswordBox>
-                <PasswordBox materialDesign:HintAssist.Hint="Powtórz hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="10,3"
+                <PasswordBox materialDesign:HintAssist.Hint="Powtórz hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="10,3" Foreground="#FFFFFF"
                          helper:PasswordBoxAssistant.BindPassword="True"
                          helper:PasswordBoxAssistant.BoundPassword="{Binding RepeatedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </PasswordBox>
             </StackPanel>
             <!--Create Button-->
-            <Button Content="Stwórz" Margin="10,3" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Command="{Binding CreateCommand}" ToolTip="Utwórz konto."/>
+            <Button Content="Stwórz" Margin="10,3" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Command="{Binding CreateCommand}" ToolTip="Utwórz konto."
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"/>
             <!--Error Message-->
             <materialDesign:Snackbar IsActive="{Binding ShowErrorMessage}" Grid.Row="6"  Grid.ColumnSpan="4">
                 <materialDesign:SnackbarMessage ActionContent="OK" ActionCommand="{Binding Accepted}">
