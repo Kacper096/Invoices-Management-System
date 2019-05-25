@@ -83,7 +83,7 @@ namespace Model
                 var _newAcc = new LoginDTO()
                     {
                         PESEL = Int64.Parse(pesel),
-                        Name = name ?? ,
+                        Name = name,
                         LastName = lastname,
                         Password = PasswordVerification.CreatePasswordHash(password.Trim())
                     };
