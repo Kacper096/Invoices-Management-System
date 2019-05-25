@@ -55,10 +55,10 @@
     <Compile Include="InvoicesSorter.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="ManagerCollection.cs" />
-    <Compile Include="PasswordVerification.cs" />
-    <Compile Include="PESEL.cs" />
+    <Compile Include="Validators\PasswordVerification.cs" />
+    <Compile Include="Validators\PESEL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidationColors.cs" />
+    <Compile Include="Validators\ValidationColors.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

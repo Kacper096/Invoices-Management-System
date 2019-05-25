@@ -51,11 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDataAccess.cs" />
-    <Compile Include="AccountDTO.cs" />
-    <Compile Include="AccountInfoDTO.cs" />
-    <Compile Include="BusinessDTO.cs" />
+    <Compile Include="DTOs\AccountDTO.cs" />
+    <Compile Include="DTOs\AccountInfoDTO.cs" />
+    <Compile Include="DTOs\BusinessDTO.cs" />
     <Compile Include="CategoryDataAccess.cs" />
-    <Compile Include="CategoryDTO.cs" />
+    <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="FakturaSzczegoly.cs">
       <DependentUpon>Fees.tt</DependentUpon>
     </Compile>
@@ -80,9 +80,9 @@
     <Compile Include="Firmy.cs">
       <DependentUpon>Fees.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTOs\InvoiceBusinessDTO.cs" />
+    <Compile Include="DTOs\InvoiceDetailsDTO.cs" />
     <Compile Include="IAccountDataAccess.cs" />
-    <Compile Include="InvoiceBusinessDTO.cs" />
-    <Compile Include="InvoiceDetailsDTO.cs" />
     <Compile Include="Kategorie.cs">
       <DependentUpon>Fees.tt</DependentUpon>
     </Compile>
@@ -92,7 +92,7 @@
     <Compile Include="Liczebniki.cs">
       <DependentUpon>Fees.tt</DependentUpon>
     </Compile>
-    <Compile Include="LoginDTO.cs" />
+    <Compile Include="DTOs\LoginDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Uslugi.cs">
       <DependentUpon>Fees.tt</DependentUpon>
