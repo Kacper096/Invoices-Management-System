@@ -48,8 +48,8 @@
     <Compile Include="Address.cs" />
     <Compile Include="Business.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="IAccount.cs" />
-    <Compile Include="ILogin.cs" />
+    <Compile Include="Interfaces\IAccount.cs" />
+    <Compile Include="Interfaces\ILogin.cs" />
     <Compile Include="Invoice.cs" />
     <Compile Include="InvoiceDetails.cs" />
     <Compile Include="InvoicesSorter.cs" />
