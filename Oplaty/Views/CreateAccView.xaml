@@ -42,24 +42,35 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" >
-                <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="Imię"  Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <!--Inputs-->
+            <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="4" >
+                <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="Imię"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3">
                 </TextBox>
-                <TextBox Text="{Binding Surrname}" materialDesign:HintAssist.Hint="Nazwisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox Text="{Binding Lastname}" materialDesign:HintAssist.Hint="Nazwisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3">
                 </TextBox>
-                <TextBox Text="{Binding PESEL}" materialDesign:HintAssist.Hint="PESEL" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox Text="{Binding PESEL}" materialDesign:HintAssist.Hint="PESEL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,3" MaxLength="11">
                 </TextBox>
-                <PasswordBox materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                         helper:PasswordBoxAssistant.BindPassword="True"
-                         helper:PasswordBoxAssistant.BoundPassword="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
+                <PasswordBox materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="10,3"
+                             helper:PasswordBoxAssistant.BindPassword="True"
+                             helper:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="Musi zawierać od 8 do 22 znaków. Posiadać małą, dużą literę, cyfrę oraz znak specjalny(@$!%*?&amp;_-)">
                 </PasswordBox>
-                <PasswordBox materialDesign:HintAssist.Hint="Powtórz hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                <PasswordBox materialDesign:HintAssist.Hint="Powtórz hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="10,3"
                          helper:PasswordBoxAssistant.BindPassword="True"
-                         helper:PasswordBoxAssistant.BoundPassword="{Binding RepeatedPassword}">
+                         helper:PasswordBoxAssistant.BoundPassword="{Binding RepeatedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </PasswordBox>
-                <Button Content="Stwórz"/>
             </StackPanel>
+            <!--Create Button-->
+            <Button Content="Stwórz" Margin="10,3" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Command="{Binding CreateCommand}" ToolTip="Utwórz konto."/>
+            <!--Error Message-->
+            <materialDesign:Snackbar IsActive="{Binding ShowErrorMessage}" Grid.Row="6"  Grid.ColumnSpan="4">
+                <materialDesign:SnackbarMessage ActionContent="OK" ActionCommand="{Binding Accepted}">
+                    <TextBlock Text="{Binding ErrorMessage}" TextWrapping="WrapWithOverflow"/>
+                </materialDesign:SnackbarMessage>
+            </materialDesign:Snackbar>
         </Grid>
     </Grid>
 </UserControl>

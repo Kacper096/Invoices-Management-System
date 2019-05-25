@@ -12,7 +12,7 @@ namespace Model
         private static bool IsDigit(string param)
         {
             if (string.IsNullOrEmpty(param) || string.IsNullOrWhiteSpace(param))
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("PESEL nie może być pusty.");
 
             param = param.Trim(' ');
             if (param.Length.CompareTo(11) > 0 || param.Length.CompareTo(11) < 0)

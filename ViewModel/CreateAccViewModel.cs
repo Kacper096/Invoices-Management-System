@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using Model;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,14 @@ namespace ViewModel
     {
         #region Private Fields
         private string _name = string.Empty;
-        private string _surrname = string.Empty;
+        private string _lastname = string.Empty;
         private string _pesel = string.Empty;
         private string _password = string.Empty;
         private string _repeatedPassword = string.Empty;
         private static int _amountOfInstances = 0;
+        private ILogin _login;
+        private string _errorMessage;
+        private bool _showErrorMessage;
         #endregion
 
         #region Binding Properties
@@ -29,12 +33,12 @@ namespace ViewModel
                 SetProperty(ref _name, value);
             }
         }
-        public string Surrname
+        public string Lastname
         {
-            get => _surrname;
+            get => _lastname;
             set
             {
-                SetProperty(ref _surrname, value);
+                SetProperty(ref _lastname, value);
             }
         }
         public string PESEL
@@ -68,14 +72,71 @@ namespace ViewModel
             get => _amountOfInstances;
         }
 
+        #region Create New Account
+        public ICommand CreateCommand => new DelegateCommand(CreateAccount);
+        public ICommand Accepted => new DelegateCommand(() => { ShowErrorMessage = false; });
+        /// <summary>
+        /// Provides error text to UI.
+        /// </summary>
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                SetProperty(ref _errorMessage, value);
+            }
+        }
+
+        public bool ShowErrorMessage
+        {
+            get => _showErrorMessage;
+            set
+            {
+                SetProperty(ref _showErrorMessage, value);
+            }
+        }
+
+        /// <summary>
+        /// It creates acccount. It's connected with Db.
+        /// </summary>
+        private async void CreateAccount()
+        {
+            try
+            {
+                if (String.Equals(Password,RepeatedPassword))
+                {
+                   var _approve = await _login.CreateAccount(PESEL, Name, Lastname, Password);
+
+                    if (_approve)
+                    {
+                        ErrorMessage = "Konto założone pomyślnie.";
+                    }
+                    else
+                        ErrorMessage = "Coś poszło nie tak.";
+
+                    ShowErrorMessage = true;
+                }
+                else
+                {
+                    throw new ArgumentException("Wpisz poprawne powtórzone hasło.");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                ErrorMessage = e.Message;
+                ShowErrorMessage = true;
+            }
+        }
+        #endregion
         public CreateAccViewModel()
         {
             _amountOfInstances++;
-            CloseCommand = new DelegateCommand(CloseMe);
+            _login = new Login();
         }
 
         #region Exit View
-        public ICommand CloseCommand { get; }
+        public ICommand CloseCommand => new DelegateCommand(CloseMe);
 
         public delegate void Close();
         public event Close CloseControl;

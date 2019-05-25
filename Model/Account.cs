@@ -111,8 +111,15 @@ namespace Model
         /// <param name="accountID"></param>
         private void SetPaidUnPaidFees(int accountID)
         {
-            _paidFees = _account.GetAccountInfo(accountID).PaidFees.ToString();
-            _unpaidFees = _account.GetAccountInfo(accountID).UnPaidFees.ToString();
+            try
+            {
+                _paidFees = string.IsNullOrEmpty(_account.GetAccountInfo(accountID).PaidFees.ToString()) == true ? "0" : _account.GetAccountInfo(accountID).PaidFees.ToString();
+                _unpaidFees = string.IsNullOrEmpty(_account.GetAccountInfo(accountID).UnPaidFees.ToString()) == true ? "0" : _account.GetAccountInfo(accountID).UnPaidFees.ToString();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>

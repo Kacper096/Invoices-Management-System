@@ -113,7 +113,7 @@ namespace Model.DataAccess
                       })
                       .FirstOrDefault();
 
-                    return query;
+                    return query ?? new AccountInfoDTO() { PaidFees = 0, UnPaidFees = 0 };
                 }
                 catch (ArgumentNullException)
                 {
@@ -375,6 +375,11 @@ namespace Model.DataAccess
             }
         }
 
+        /// <summary>
+        /// Creates new Account.
+        /// </summary>
+        /// <param name="accountInfo"></param>
+        /// <returns></returns>
         public async Task<int> CreateAccount(LoginDTO accountInfo)
         {
             try

@@ -66,23 +66,35 @@ namespace Model
 
             try
             {
-                if (PESEL.Check(pesel) && PasswordVerification.CanBeAPassword(password))
-                {
-                    var _newAcc = new LoginDTO()
+                if (string.IsNullOrEmpty(name))
+                    throw new ArgumentException("Wpisz imię.");
+
+                if (string.IsNullOrEmpty(lastname))
+                    throw new ArgumentException("Wpisz nazwisko.");
+
+                //Checks the PESEL
+                if (!PESEL.Check(pesel.Trim()))
+                    throw new ArgumentException("Wpisz poprawny PESEL");
+
+                //Checks the password
+                if (!PasswordVerification.CanBeAPassword(password.Trim()))
+                    throw new ArgumentException("Hasło nie spełnia wymagań.");
+
+                var _newAcc = new LoginDTO()
                     {
                         PESEL = Int64.Parse(pesel),
-                        Name = name,
+                        Name = name ?? ,
                         LastName = lastname,
                         Password = PasswordVerification.CreatePasswordHash(password.Trim())
                     };
 
-                    int _callback = await _account.CreateAccount(_newAcc);
+                int _callback = await _account.CreateAccount(_newAcc);
 
-                    if (_callback == 1)
-                        _result = true;
+                if (_callback == 1)
+                    _result = true;
 
-                }
-
+                
+                
                 return _result;
             }
             catch(Exception)
